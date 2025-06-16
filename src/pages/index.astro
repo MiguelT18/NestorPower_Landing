@@ -1,16 +1,29 @@
 ---
-
+import "@fontsource/lato/100";
+import "@fontsource/lato/300";
+import "@fontsource/lato/400";
+import "@fontsource/lato/700";
+import "@fontsource/lato/900";
+import "../styles/global.css";
+import Hero from "../sections/Hero.astro";
+import ThemeButton from "../components/ThemeButton.astro";
+import Logo from "../assets/logos/logo.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body class="bg-light-bg dark:bg-dark-bg px-4">
+    <nav class="mx-auto flex h-[10dvh] items-center justify-center">
+      <Logo customClass="text-black dark:text-white" />
+    </nav>
+    <Hero />
+
+    <ThemeButton client:load />
+  </body>
 </html>
