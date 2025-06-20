@@ -1,41 +1,12 @@
 ---
 import { GlobalIcons } from "@assets/icons";
-import Form from "./Form";
 ---
 
-<style>
-  @keyframes pop-in {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes pop-out {
-    from {
-      opacity: 1;
-      transform: scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-  }
-
-  .modal-content {
-    animation: pop-in 0.25s ease-out forwards;
-  }
-
-  .modal-closing .modal-content {
-    animation: pop-out 0.2s ease-in forwards;
-  }
-</style>
-
 <button
+  data-tf-popup="roUllQU2"
+  data-tf-iframe-props="title=Mi formulario de registro"
+  data-tf-medium="snippet"
+  id="open-typeform"
   class="primary-button group mx-auto flex cursor-pointer items-center justify-between gap-2 rounded-full bg-gradient-to-r from-[#de3f0d] to-[#ea0c0c] px-4 py-2 text-sm font-bold text-white uppercase transition-transform duration-300 hover:scale-105 md:px-6 md:py-3 dark:from-[#dc2626] dark:to-[#ef4444]"
 >
   Quiero unirme
@@ -44,65 +15,47 @@ import Form from "./Form";
   />
 </button>
 
-<dialog
-  id="main-dialog"
-  closedby="any"
-  class="bg-light-bg-secondary dark:bg-dark-bg-secondary m-auto rounded-xl p-4 backdrop:backdrop-blur-sm"
->
-  <div class="modal-content">
-    <h1
-      class="text-light-text-primary dark:text-dark-text-primary [&>span]:text-light-primary [&>span]:dark:text-dark-primary text-center text-2xl"
-    >
-      Primero tengo que saber <span>algunas cosas sobre ti</span>
-    </h1>
-    <Form />
-  </div>
-</dialog>
-
-<script>
+<script type="module">
   document.addEventListener("DOMContentLoaded", () => {
-    const $btns = document.querySelectorAll(".primary-button");
-    const $dialog = document.querySelector(
-      "#main-dialog",
-    ) as HTMLDialogElement | null;
+    localStorage.removeItem("typeform_submitted");
 
-    if (!$btns.length || !$dialog) return;
+    const btn = document.getElementById("open-typeform");
 
-    // ✅ Abrir el modal
-    $btns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        $dialog.classList.remove("modal-closing");
-        $dialog.showModal();
-        document.body.style.overflow = "hidden";
-      });
-    });
+    const alreadySubmitted = localStorage.getItem("typeform_submitted");
 
-    // ✅ Cierre animado por cualquier vía
-    const closeWithAnimation = () => {
-      $dialog.classList.add("modal-closing");
+    if (alreadySubmitted) {
+      // Redirigir directamente a Calendly
+      window.location.href = "https://calendly.com/tu-usuario?from=typeform";
+      return;
+    }
 
-      const duration = 200; // pop-out duration in ms
-      setTimeout(() => {
-        $dialog.close();
-      }, duration);
+    const waitForTypeform = () => {
+      if (window.typeformEmbed && btn) {
+        const popup = window.typeformEmbed.makePopup(
+          "https://form.typeform.com/to/roUllQU2",
+          {
+            mode: "popup",
+            autoClose: 0,
+            hideHeaders: true,
+            hideFooters: true,
+            onSubmit: () => {
+              // Marcar como completado
+              localStorage.setItem("typeform_submitted", "true");
+
+              // Redirigir a Calendly en nueva pestaña
+              window.open(
+                "https://calendly.com/arcenestor068/nueva-reunion?from=typeform",
+              );
+            },
+          },
+        );
+
+        btn.addEventListener("click", () => popup.open());
+      } else {
+        setTimeout(waitForTypeform, 100);
+      }
     };
 
-    // ✅ Cierre con botón (asegúrate de tener este botón dentro del <dialog>)
-    const $closeBtn = document.querySelector("#close-modal-button");
-    $closeBtn?.addEventListener("click", (e) => {
-      e.preventDefault();
-      closeWithAnimation();
-    });
-
-    // ✅ Cierre por clic fuera o escape
-    $dialog.addEventListener("cancel", (e) => {
-      e.preventDefault();
-      closeWithAnimation();
-    });
-
-    $dialog.addEventListener("close", () => {
-      document.body.style.overflow = "auto";
-      $dialog.classList.remove("modal-closing");
-    });
+    waitForTypeform();
   });
 </script>

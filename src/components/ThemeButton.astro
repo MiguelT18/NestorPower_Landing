@@ -1,5 +1,6 @@
 ---
-import { GlobalIcons } from "@assets/icons";
+import Sun from "@assets/icons/global/Sun.astro";
+import Moon from "@assets/icons/global/Moon.astro";
 ---
 
 <button
@@ -7,10 +8,10 @@ import { GlobalIcons } from "@assets/icons";
   class="bg-light-primary/50 dark:bg-dark-primary/50 border-light-primary dark:border-dark-primary fixed right-4 bottom-4 z-40 cursor-pointer rounded-full border p-3 text-white shadow-lg shadow-black/50 backdrop-blur-md transition-transform duration-300 hover:scale-110 focus:ring-0 focus:outline-none max-md:p-2"
 >
   <span id="sun-icon" class="hidden dark:inline">
-    <GlobalIcons.Sun customClass="size-8 lg:size-10 xl:size-12" />
+    <Sun customClass="size-8 lg:size-10 xl:size-12" />
   </span>
   <span id="moon-icon" class="inline dark:hidden">
-    <GlobalIcons.Moon customClass="size-8 lg:size-10 xl:size-12" />
+    <Moon customClass="size-8 lg:size-10 xl:size-12" />
   </span>
 </button>
 
