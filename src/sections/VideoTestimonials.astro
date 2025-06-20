@@ -18,9 +18,10 @@ const cardsData = [
     weightType: "Peso perdido",
   },
   {
+    videoUrl: "https://www.youtube.com/embed/Ua1_kL7pF50",
     title: "De no poder bajar la panza a verse definido sin sacrificios.",
     description:
-      "Andrés se frustraba al perder peso y también músculo. Cuando encontró un plan que cuidaba su rutina y su masa muscular, todo cambió.",
+      "André se frustraba al perder peso y también músculo. Cuando encontró un plan que cuidaba su rutina y su masa muscular, todo cambió.",
     stars: 5,
     tag: {
       name: "Definición",
@@ -50,11 +51,18 @@ const cardsData = [
       cardsData.map((card) => (
         <article class="bg-light-bg-surface dark:bg-dark-bg-surface mx-auto rounded-xl p-4 shadow-lg">
           <div class="group relative cursor-pointer">
-            <SkeletonLoader customClass="rounded-lg w-full aspect-video" />
-
-            <div>
-              <GlobalIcons.Play customClass="absolute top-1/2 left-1/2 z-30 size-10 lg:size-14 p-2 rounded-full bg-light-primary dark:bg-dark-primary -translate-x-1/2 -translate-y-1/2 text-white group-hover:scale-110 transition-duration duration-300" />
-            </div>
+            {card.videoUrl ? (
+              <iframe
+                class="aspect-video w-full rounded-lg"
+                src={card.videoUrl}
+                title="MÉTODO CRONOFIT90"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              />
+            ) : (
+              <SkeletonLoader customClass="rounded-lg w-full aspect-video" />
+            )}
           </div>
 
           <div class="mt-4 mb-2 flex items-center gap-1">
