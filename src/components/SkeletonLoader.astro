@@ -1,0 +1,40 @@
+---
+const { customClass = "" } = Astro.props;
+---
+
+<svg
+  role="presentation"
+  viewBox="0 0 100 100"
+  preserveAspectRatio="none"
+  class={`block ${customClass}`}
+>
+  <rect width="100%" height="100%" fill="url(#shimmerGradient)"></rect>
+
+  <defs>
+    <linearGradient id="shimmerGradient">
+      <stop offset="0" stop-color="var(--loader-bg)">
+        <animate
+          attributeName="offset"
+          values="-2; -2; 1"
+          dur="2s"
+          repeatCount="indefinite"></animate>
+      </stop>
+
+      <stop offset="0.5" stop-color="var(--loader-fg)">
+        <animate
+          attributeName="offset"
+          values="-1; -1; 2"
+          dur="2s"
+          repeatCount="indefinite"></animate>
+      </stop>
+
+      <stop offset="1" stop-color="var(--loader-bg)">
+        <animate
+          attributeName="offset"
+          values="0; 0; 3"
+          dur="2s"
+          repeatCount="indefinite"></animate>
+      </stop>
+    </linearGradient>
+  </defs>
+</svg>

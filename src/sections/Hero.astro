@@ -1,72 +1,38 @@
-<div class="bg-light-bg-secondary dark:bg-dark-bg-secondary rounded-lg p-4">
+---
+import PrimaryButton from "@components/PrimaryButton.astro";
+---
+
+<style>
+  .shadow-frame {
+    box-shadow: 0 0px 24px var(--vsl-shadow-frame);
+  }
+</style>
+
+<section class="container mx-auto px-4">
   <h1
-    class="font-lato font-100 text-md text-primary text-center text-xl uppercase"
+    class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mx-auto max-w-[1080px] text-center text-3xl text-balance text-black md:text-4xl lg:text-5xl dark:text-white"
   >
-    Hola Mundo
+    Cómo perder hasta <span>12 kilos de grasa</span>, eliminar tu panza y ganar
+    músculo en <span>90 días</span>
   </h1>
-  <p class="text-light-text-secondary dark:text-dark-text-secondary">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus porro
-    illo nisi minus maiores impedit, fugit molestias eaque delectus eius quidem
-    itaque adipisci perferendis illum, tenetur natus ad autem rem! Rem,
-    blanditiis placeat dolor, aut vel eius minus, quos ex tempora esse dolores.
-    Quaerat iste inventore vero. Excepturi quod nam, nobis rem voluptate
-    accusantium facilis sunt veniam iste? Fugiat, quasi! Tempore voluptatem sed
-    corporis culpa nemo saepe nisi quisquam consequuntur omnis excepturi
-    laboriosam distinctio praesentium totam soluta veritatis laborum ipsum,
-    maiores sit. Sed et veniam provident eos dolorem voluptatem necessitatibus!
-    Odit iste non laudantium aliquid praesentium recusandae, id exercitationem
-    enim, vitae harum reiciendis, excepturi obcaecati perspiciatis doloribus
-    ullam? Officiis voluptatem perferendis ipsa saepe repudiandae soluta nihil,
-    ratione iusto consequatur reiciendis. Corporis, nobis unde quidem deserunt
-    laborum totam aliquam rem, maxime architecto sapiente ducimus eaque sed
-    dolorum. Dolore eveniet, cupiditate voluptates deserunt, quisquam nostrum,
-    eius quis itaque repellat dolorum illo! Laborum. Odio labore possimus
-    minima, accusantium quod expedita commodi vel porro. Est quasi sed nemo eius
-    laborum impedit, reprehenderit porro deleniti cupiditate exercitationem at,
-    itaque temporibus, optio facilis doloremque officiis perferendis. Unde quam
-    magni laudantium vitae veritatis atque quia totam quas beatae blanditiis?
-    Officia quod architecto ipsam delectus natus mollitia totam consequatur,
-    optio eligendi. Eaque eius nostrum quos rerum soluta blanditiis. Commodi
-    saepe earum assumenda eligendi officiis, eius porro voluptatem ullam vitae
-    quidem non unde fuga odit repellat rem dolorem iusto nulla nobis blanditiis?
-    Perferendis eligendi sit ullam facere harum praesentium? Quidem itaque optio
-    aut. Aspernatur animi iure necessitatibus numquam aliquid, nobis velit non
-    beatae et eveniet molestias laboriosam quaerat sit ipsa officia tenetur
-    architecto totam magni itaque. At, earum labore! Sed libero necessitatibus
-    consectetur quibusdam officia laboriosam nihil excepturi, cum voluptates
-    accusantium inventore corporis iusto veritatis tenetur quam, perferendis
-    reiciendis. Distinctio nemo tenetur quam reprehenderit obcaecati id.
-    Consectetur, optio nihil. Nam possimus distinctio, vel facere animi unde
-    veniam, a adipisci nostrum laborum sequi consequuntur asperiores eveniet!
-    Iste, cumque! Voluptatem, porro. Error quasi eum aliquam similique, suscipit
-    modi! Delectus, dignissimos eaque? Odit animi, necessitatibus nam incidunt
-    doloribus dolore hic quo error neque mollitia corporis maxime explicabo
-    debitis, odio ipsam enim numquam eos earum excepturi voluptate inventore
-    fugit harum sint. Saepe, laboriosam. Ex quas nihil, enim nostrum, neque
-    numquam unde beatae reprehenderit aliquid tempore quaerat repudiandae
-    magnam, ab veniam quibusdam dignissimos rem. Sequi assumenda corporis
-    doloremque voluptates obcaecati, deleniti cupiditate fuga iure. Aspernatur
-    saepe dolorum atque soluta debitis voluptas fuga enim explicabo expedita.
-    Non dicta perferendis enim? Est aliquam placeat exercitationem natus,
-    blanditiis soluta? Quibusdam amet molestiae, iste quaerat animi dolore
-    doloribus! Accusantium harum laboriosam facilis esse, deserunt accusamus
-    optio nemo, officiis minima pariatur, asperiores fuga tempora ex voluptatum!
-    Alias voluptate ipsum inventore non! Rerum, deleniti. Nulla eius possimus
-    rem culpa placeat. Qui quaerat voluptates voluptas hic doloremque, accusamus
-    alias voluptatibus officiis delectus eius earum, totam vel neque impedit,
-    omnis blanditiis quam perferendis doloribus vitae optio! Repellat recusandae
-    facilis consequuntur voluptate voluptatem. Accusantium odio voluptas,
-    dignissimos eos asperiores corporis quasi! Asperiores magni necessitatibus
-    quia, autem officia nihil ab, possimus in illum cum praesentium? Nobis
-    laborum soluta quidem deserunt quasi dolore, commodi et? Laboriosam in
-    obcaecati magnam, dolorum quis explicabo voluptatem totam corporis beatae
-    laborum minima vel assumenda officiis sapiente eaque cumque asperiores quo
-    minus, aperiam facere repellendus tenetur illum autem hic. Totam. Culpa
-    sequi vero consequatur obcaecati molestiae nobis laborum numquam eius porro
-    commodi, quia ipsam maxime adipisci non nostrum odit ducimus doloribus et,
-    incidunt vel cupiditate eligendi id dolore atque. Nesciunt! Placeat
-    explicabo distinctio incidunt doloribus tenetur at sapiente est odio sit
-    odit nulla suscipit eveniet perspiciatis in, earum illum maxime accusamus,
-    impedit dolor ea, quidem neque. Repellat vitae nesciunt non!
+
+  <p
+    class="text-light-text-secondary dark:text-dark-text-secondary mt-2 mb-10 text-center text-xl text-balance max-lg:text-lg"
+  >
+    Sin pasar hambre y aunque tengas poco tiempo
   </p>
-</div>
+
+  <div
+    class="shadow-frame relative mx-auto mb-10 max-w-[1080px] overflow-hidden rounded-2xl shadow-lg dark:shadow-[0_12px_24px_rgba(255,255,255,0.05)]"
+  >
+    <iframe
+      class="aspect-video w-full rounded-lg"
+      src="https://www.youtube.com/embed/IZZsfhuCBtI?modestbranding=1&autoplay=0&mute=1"
+      title="Método CronoFit90"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>
+  </div>
+
+  <PrimaryButton />
+</section>

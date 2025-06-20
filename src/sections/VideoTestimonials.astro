@@ -1,0 +1,81 @@
+---
+import SkeletonLoader from "@components/SkeletonLoader.astro";
+import { GlobalIcons } from "@assets/icons";
+
+const cardsData = [
+  {
+    title: "De pasar hambre a bajar 10kg y sentirse bien con su cuerpo.",
+    description:
+      "Esteban dejó atrás las dietas, la frustración y el rebote. Hoy entrena, come bien y se siente orgulloso de su cuerpo. No fue magia, fue entender lo que su cuerpo realmente necesitaba.",
+    stars: 5,
+    tag: {
+      name: "Transformación",
+      icon: GlobalIcons.Target,
+      color: "#2563eb",
+    },
+    duration: "3 meses",
+    weight: "-10kg",
+    weightType: "Peso perdido",
+  },
+  {
+    title: "De no poder bajar la panza a verse definido sin sacrificios.",
+    description:
+      "Andrés se frustraba al perder peso y también músculo. Cuando encontró un plan que cuidaba su rutina y su masa muscular, todo cambió.",
+    stars: 5,
+    tag: {
+      name: "Definición",
+      icon: GlobalIcons.Cup,
+      color: "#dc2626",
+    },
+    duration: "4 meses",
+    weight: "+5kg",
+    weightType: "Músculo ganado",
+  },
+];
+---
+
+<section
+  class="dark:bg-dark-bg-secondary bg-light-bg-secondary mt-20 px-4 pt-12 pb-16"
+>
+  <h1
+    class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+  >
+    Estos son algunos de los <span>hombres con los que trabajamos</span>
+  </h1>
+
+  <main
+    class="mx-auto mt-4 grid max-w-[1080px] grid-cols-2 gap-8 max-sm:grid-cols-1 lg:gap-16"
+  >
+    {
+      cardsData.map((card) => (
+        <article class="bg-light-bg-surface dark:bg-dark-bg-surface mx-auto rounded-xl p-4 shadow-lg">
+          <div class="group relative cursor-pointer">
+            <SkeletonLoader customClass="rounded-lg w-full aspect-video" />
+
+            <div>
+              <GlobalIcons.Play customClass="absolute top-1/2 left-1/2 z-30 size-10 lg:size-14 p-2 rounded-full bg-light-primary dark:bg-dark-primary -translate-x-1/2 -translate-y-1/2 text-white group-hover:scale-110 transition-duration duration-300" />
+            </div>
+          </div>
+
+          <div class="mt-4 mb-2 flex items-center gap-1">
+            {[...Array(card.stars)].map((_, index) => (
+              <GlobalIcons.Star customClass="size-4 lg:size-6" />
+            ))}
+            <span class="text-light-text-secondary dark:text-dark-text-secondary text-sm">
+              ({card.stars}.0)
+            </span>
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <h2 class="text-md font-bold text-balance text-black dark:text-white">
+              {card.title}
+            </h2>
+            <p class="text-light-text-secondary dark:text-dark-text-secondary text-sm text-pretty">
+              {card.description}
+            </p>
+          </div>
+        </article>
+      ))
+    }
+  </main>
+</section>

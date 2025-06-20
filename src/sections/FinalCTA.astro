@@ -1,0 +1,62 @@
+---
+import PrimaryButton from "@components/PrimaryButton.astro";
+import { GlobalIcons } from "@assets/icons";
+
+const ctaItems = [
+  "Quieres eliminar grasa y reducir esa panza que ya no soportas.",
+  "Deseas sentirte seguro y orgulloso de tu cuerpo.",
+  "Buscas equilibrar tu vida social y laboral sin renunciar a verte bien.",
+  "Estás cansado de comprar camisas de tallas más grandes y quieres volver a usar las que amas.",
+];
+---
+
+<section
+  class="dark:bg-dark-bg-secondary bg-light-bg-secondary mt-20 px-4 py-12"
+>
+  <h1
+    class="text-light-text-primary dark:text-dark-text-primary [&>span]:text-light-primary dark:[&>span]:text-dark-primary mb-4 text-center text-2xl text-balance lg:text-3xl"
+  >
+    Toma el primer paso para <span>transformar tu cuerpo</span>
+  </h1>
+
+  <p
+    class="bg-light-bg-surface dark:bg-dark-bg-surface text-light-text-secondary dark:text-dark-text-secondary text-md [&>span]:text-light-primary dark:[&>span]:text-dark-primary mx-auto block max-w-[1080px] rounded-lg p-4 text-center text-balance [&>span]:font-bold"
+  >
+    Cada mes abrimos un cupo exclusivo para un pequeño grupo de personas
+    comprometidas, que realmente quieran cambiar su vida y dejar atrás la panza
+    y la frustración.
+    <br /><br />
+    Este programa no es para todos, solo para quienes están dispuestos a esforzarse
+    y comprometerse con su mejor versión.
+    <br /><br />
+    Aplica a <span>CronoFit90™</span> y cuéntame por qué deberíamos trabajar juntos.
+  </p>
+
+  <h2
+    class="text-light-text-primary dark:text-dark-text-primary mt-8 mb-4 text-center text-lg font-bold"
+  >
+    Esta llamada es para ti si:
+  </h2>
+
+  <ul class="mx-auto max-w-[1080px] space-y-4">
+    {
+      ctaItems.map((item) => (
+        <li class="text-light-text-secondary dark:text-dark-text-secondary flex list-none items-center">
+          <span class="block">
+            <GlobalIcons.Check customClass="inline-block mr-2 size-8 text-light-primary dark:text-dark-primary" />
+          </span>
+          <span class="block text-sm">{item}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <span
+    class="text-light-text-secondary dark:text-dark-text-secondary text-md mt-10 mb-6 block text-center"
+  >
+    Si esto resuena contigo, agenda tu sesión ahora y empecemos a construir tu
+    cambio real.
+  </span>
+
+  <PrimaryButton />
+</section>

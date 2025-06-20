@@ -1,0 +1,51 @@
+---
+import PrimaryButton from "@components/PrimaryButton.astro";
+import { GlobalIcons } from "@assets/icons";
+---
+
+<section class="container mx-auto my-16 max-w-[1080px] px-4">
+  <article
+    class="bg-light-bg-secondary dark:bg-dark-bg-secondary shadow-light dark:shadow-dark mx-auto max-w-[600px] rounded-xl p-4 text-center shadow-lg md:p-8"
+  >
+    <GlobalIcons.Shield
+      customClass="dark:text-dark-primary text-light-primary size-20 max-md:size-16 mb-6 mx-auto"
+    />
+
+    <h1
+      class="dark:text-dark-primary text-light-primary text-center text-2xl text-balance lg:text-3xl"
+    >
+      Garantía de Devolución
+    </h1>
+    <p
+      class="text-light-text-secondary dark:text-dark-text-secondary my-2 text-sm"
+    >
+      Si en 10 días no ves progreso o sientes que no es para vos, te devuelvo el
+      100% del dinero.
+    </p>
+
+    <span
+      class="text-light-primary dark:text-dark-primary text-md mb-6 block font-bold"
+      >Sin preguntas. Sin vueltas</span
+    >
+
+    <div
+      class="bg-light-bg-surface dark:bg-dark-bg-surface mb-4 rounded-lg p-4 md:mb-8"
+    >
+      <h2
+        class="text-md text-light-text-primary dark:text-dark-text-primary mb-2 text-center font-bold"
+      >
+        ¿Por qué ofrezo esta garantía?
+      </h2>
+      <p
+        class="text-light-text-secondary dark:text-dark-text-secondary text-sm"
+      >
+        Porque estoy 100% seguro de que CronoFit90 funciona. He visto a cientos
+        de hombres transformar sus cuerpos con este método. Si sigues el plan,
+        vas a ver resultados. Y si no, simplemente me escribes y te devuelvo
+        todo tu dinero.
+      </p>
+    </div>
+
+    <PrimaryButton />
+  </article>
+</section>

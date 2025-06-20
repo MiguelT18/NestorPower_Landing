@@ -1,0 +1,132 @@
+---
+import { Image } from "astro:assets";
+import { loadTestimonialImages } from "@lib/loadImages.ts";
+
+const images = loadTestimonialImages();
+---
+
+<style>
+  .testimonial-carousel .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .testimonial-carousel .swiper-button-prev,
+  .testimonial-carousel .swiper-button-next {
+    position: static;
+    padding: 1.5rem;
+    border-radius: 50%;
+  }
+
+  .testimonial-carousel .swiper-button-prev::after,
+  .testimonial-carousel .swiper-button-next::after {
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  .testimonial-carousel .swiper-button-prev::after {
+    margin-right: 0.25rem;
+  }
+
+  .testimonial-carousel .swiper-button-next::after {
+    margin-left: 0.25rem;
+  }
+
+  .testimonial-carousel .swiper-pagination {
+    position: static;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-carousel .swiper-slide {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .testimonial-carousel .swiper-button-prev::after,
+    .testimonial-carousel .swiper-button-next::after {
+      font-size: 2rem;
+    }
+
+    .testimonial-carousel .swiper-button-prev,
+    .testimonial-carousel .swiper-button-next {
+      padding: 2rem;
+    }
+  }
+</style>
+
+<section class="mx-auto my-16 max-w-[1080px] px-4">
+  <h1
+    class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mb-6 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+  >
+    los cambios <span>hablan por si solos</span>
+  </h1>
+
+  <main class="testimonial-carousel container mx-auto">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        {
+          images.map(({ antes, despues }) => (
+            <div class="swiper-slide">
+              <div class="swiper-zoom-container relative">
+                <span class="bg-light-primary/30 border-light-primary dark:bg-dark-primary/20 dark:border-dark-primary text-md text-light-primary absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full border px-6 py-2 font-bold">
+                  Antes
+                </span>
+                <Image
+                  src={antes}
+                  alt="Antes"
+                  class="size-full rounded-xl object-cover"
+                />
+                <div class="pointer-events-none absolute inset-0 z-10 rounded-xl bg-gradient-to-b from-transparent to-black opacity-60" />
+              </div>
+              <div class="swiper-zoom-container relative">
+                <span class="bg-light-primary/30 border-light-primary dark:bg-dark-primary/20 dark:border-dark-primary text-md text-light-primary absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full border px-6 py-2 font-bold">
+                  Después
+                </span>
+                <Image
+                  src={despues}
+                  alt="Después"
+                  class="size-full rounded-xl object-cover"
+                />
+                <div class="pointer-events-none absolute inset-0 z-10 rounded-xl bg-gradient-to-b from-transparent to-black opacity-60" />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 flex w-full justify-between">
+        <div class="swiper-button-prev bg-light-primary dark:bg-dark-primary">
+        </div>
+        <div class="swiper-button-next bg-light-primary dark:bg-dark-primary">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </main>
+</section>
+
+<script>
+  import initSwiperCarousel from "@scripts/carousel.ts";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initSwiperCarousel(".testimonial-carousel", {
+      autoplay: { delay: 3000 },
+      spaceBetween: 20,
+      grabCursor: true,
+      zoom: false,
+      autoHeight: true,
+      slidesPerView: 1,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  });
+</script>

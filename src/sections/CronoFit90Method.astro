@@ -1,0 +1,73 @@
+---
+import { GlobalIcons } from "@assets/icons";
+import PrimaryButton from "@components/PrimaryButton.astro";
+
+const cronofitMethod = [
+  {
+    title: "Plan Diario",
+    description:
+      "Organizamos tus entrenos, comidas y descanso según tu día a día. Sin caos, sin excusas, solo acción.",
+    icon: GlobalIcons.Clock,
+  },
+  {
+    title: "Dieta Flex",
+    description:
+      "Come bien sin restricciones. Con el Semáforo de Platos, eliges fácil en cualquier lugar, sin culpa ni ansiedad.",
+    icon: GlobalIcons.Cutlery,
+  },
+  {
+    title: "Entreo Express",
+    description:
+      "3 sesiones por semana, 45 minutos. Fuerza y cardio para quemar grasa rápido. Incluso desde un hotel.",
+    icon: GlobalIcons.Dumbbell,
+  },
+  {
+    title: "Seguimiento Total",
+    description:
+      "Cada 15 días ajustamos tu plan para que avances sin freno. Siempre en movimiento, siempre mejorando.",
+    icon: GlobalIcons.Target,
+  },
+];
+---
+
+<section class="container mx-auto my-16 max-w-[1080px] px-4">
+  <header>
+    <h1
+      class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mb-4 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+    >
+      Método <span>CronoFit90</span>
+    </h1>
+
+    <p
+      class="text-light-text-secondary dark:text-dark-text-secondary text-md mb-4 text-center text-balance"
+    >
+      CronoFit90 no es un plan de PDF ni una dieta más. Es un sistema completo
+      diseñado para hombres ocupados que quieren bajar de panza sin pasar hambre
+      ni sacrificar su tiempo.
+    </p>
+
+    <p
+      class="text-light-text-muted dark:text-dark-text-text-light-text-muted mb-10 text-center text-sm text-pretty"
+    >
+      Combina organización realista, nutrición flexible, entrenos rápidos y
+      seguimiento personalizado para resultados que duran.
+    </p>
+  </header>
+
+  <ul class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2">
+    {
+      cronofitMethod.map((item) => (
+        <li class="bg-light-bg-surface dark:bg-dark-bg-surface shadow-light dark:shadow-dark rounded-xl p-5 shadow-lg">
+          <item.icon customClass="size-14 mb-6 text-light-primary dark:text-dark-primary" />
+
+          <h2 class="text-md font-semibold dark:text-white">{item.title}</h2>
+          <p class="text-light-text-secondary dark:text-dark-text-secondary text-sm">
+            {item.description}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <PrimaryButton />
+</section>

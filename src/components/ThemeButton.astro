@@ -1,8 +1,17 @@
+---
+import { GlobalIcons } from "@assets/icons";
+---
+
 <button
   id="theme-button"
-  class="bg-primary/20 dark:text-dark-text-primary fixed right-4 bottom-4 rounded-full px-4 py-2 backdrop-blur-md"
+  class="bg-light-primary/50 dark:bg-dark-primary/50 border-light-primary dark:border-dark-primary fixed right-4 bottom-4 z-40 cursor-pointer rounded-full border p-3 text-white shadow-lg shadow-black/50 backdrop-blur-md transition-transform duration-300 hover:scale-110 focus:ring-0 focus:outline-none max-md:p-2"
 >
-  Cambiar tema
+  <span id="sun-icon" class="hidden dark:inline">
+    <GlobalIcons.Sun customClass="size-8 lg:size-10 xl:size-12" />
+  </span>
+  <span id="moon-icon" class="inline dark:hidden">
+    <GlobalIcons.Moon customClass="size-8 lg:size-10 xl:size-12" />
+  </span>
 </button>
 
-<script src="/src/scripts/ToggleTheme.ts"></script>
+<script src="@scripts/toggleTheme.ts"></script>

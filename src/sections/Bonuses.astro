@@ -1,0 +1,68 @@
+---
+import { GlobalIcons } from "@assets/icons";
+
+const bonuses = [
+  {
+    icon: GlobalIcons.Sleep,
+    title: "Duerme mejor, rinde mejor",
+    description:
+      "4 Cambios rápidos para mejorar descanso y duplicarlo en 7 días.",
+  },
+  {
+    icon: GlobalIcons.Meat,
+    title: "Guía para controlar el hambre emocional",
+    description:
+      "Aprende a manejar esos antojos que te sacan de la dieta sin sentir culpa ni frustración.",
+  },
+  {
+    icon: GlobalIcons.Weight,
+    title:
+      "Guía para no volver a retomar el peso nunca más, incluso si ya dejaste el programa.",
+    description:
+      "Estrategias para mantener tus resultados a largo plazo, sin efecto rebote.",
+  },
+];
+---
+
+<section
+  class="dark:bg-dark-bg-secondary bg-light-bg-secondary mt-20 px-4 pt-12 pb-16"
+>
+  <h1
+    class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mb-4 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+  >
+    Bonos <span>Exclusivos</span>
+  </h1>
+  <p
+    class="text-light-text-secondary dark:text-dark-text-secondary text-md mb-4 text-center text-balance"
+  >
+    Herramientas adicionales para garantizar tu éxito a largo plazo
+  </p>
+
+  <ul
+    class="container mx-auto mt-8 grid max-w-[1080px] grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+  >
+    {
+      bonuses.map((bonus) => (
+        <li class="bg-light-bg-surface dark:bg-dark-bg-surface rounded-lg p-6 shadow-md">
+          <span class="bg-light-primary dark:bg-dark-primary mx-auto mb-4 flex w-fit justify-center rounded-full p-4">
+            <bonus.icon customClass="size-8 text-white" />
+          </span>
+
+          <div class="space-y-2">
+            <h2 class="text-md text-light-text-primary dark:text-dark-text-primary text-center font-bold">
+              {bonus.title}
+            </h2>
+            <p class="text-light-text-secondary dark:text-dark-text-secondary text-center text-sm">
+              {bonus.description}
+            </p>
+          </div>
+
+          <p class="text-light-primary dark:text-dark-primary [&>span]:text-light-text-secondary [&>span]:dark:text-dark-text-secondary mt-4 text-center text-sm font-bold [&>span]:mr-1 [&>span]:text-xs [&>span]:line-through">
+            <span>Antes: $59</span>
+            GRATIS si te registras hoy
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

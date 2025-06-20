@@ -1,0 +1,109 @@
+---
+import { GlobalIcons } from "@assets/icons";
+
+const faqs = [
+  {
+    question: "¿La asesoría es 100% online?",
+    answer:
+      "Si. Y funciona mejor que muchas presenciales.\n¿Por qué? Porque no dependes de un gimnasio ni de horarios, y tienes un sistema pensado para seguir desde cualquier parte.\nTodo está estructurado: tus entrenamientos, tus comidas, tu progreso.\nY lo más importante: te sigo de cerca, te corrijo y si algo no funciona lo ajustamos en tiempo real.",
+  },
+  {
+    question: "¿Puedo hacer el programa si no tengo gimnasio?",
+    answer:
+      "Si, pero necesitarás un kit básico.\nPara que el plan funcione de verdad, necesitas al menos un par de mancuernas ajustables o fijas y una barra con discos. ¿Por qué? Porque entrenar bien significa progresar. Si no tienes carga externa, no vas a lograr resultados visibles. Si tienes el mínimo equipo, yo me encargo de que tu físico cambie.",
+  },
+  {
+    question: "¿Cuánto tiempo tengo que entrenar por semana?",
+    answer:
+      "El mínimo son 3 días por semana, bien entrenados.\nPara que CronoFit90 funcione y logres una reducción real de grasa manteniendo masa muscular, necesitas comprometerte al menos 3 veces por semana.\nNo se trata de vivir en el gimnasio, sino de entrenar con intención y estructura.",
+  },
+  {
+    question: "¿Y si no logro bajar grasa? ¿Me devuelves el dinero?",
+    answer:
+      "Si, si sigues el plan tal como te lo indico y no obtienes resultados, te devuelvo el 100% del dinero.\nConfío plenamente en el sistema porque está diseñado para funcionar si se aplica correctamente.\nPor eso, si cumples con el seguimiento, el entrenamiento y la alimentación que te doy y aún así no ves progreso en las primeras semanas, te hago la devolución sin problemas.\nMi compromiso es total, pero también espero compromiso de tu parte.",
+  },
+];
+---
+
+<style>
+  .faq-answer {
+    overflow: hidden;
+    transition:
+      height 0.4s ease,
+      opacity 0.3s ease;
+    height: 0;
+    opacity: 0;
+  }
+  .faq-answer.open {
+    opacity: 1;
+  }
+  .faq-item.active .icon-wrapper {
+    transform: rotate(45deg);
+  }
+</style>
+
+<section class="container mx-auto my-16 max-w-[1080px] px-4">
+  <div>
+    <h1
+      class="dark:text-dark-primary text-light-primary text-center text-2xl text-balance lg:text-3xl"
+    >
+      Preguntas Frecuentes
+    </h1>
+    <p
+      class="text-light-text-secondary dark:text-dark-text-secondary my-2 text-center text-sm"
+    >
+      Resolvemos las dudas más comunes sobre el programa
+      <strong>CronoFit90.</strong>
+    </p>
+  </div>
+
+  <ul class="faq mt-6">
+    {
+      faqs.map((faq) => (
+        <li class="faq-item bg-light-bg-surface dark:bg-dark-bg-surface mb-4 cursor-pointer rounded-xl p-4 md:mb-8">
+          <h2 class="faq-question text-light-text-primary dark:text-dark-text-primary flex items-center justify-between gap-4 text-lg font-semibold">
+            {faq.question}
+            <span class="icon-wrapper block transition-transform duration-300">
+              <GlobalIcons.Plus customClass="size-10 text-light-primary dark:text-dark-primary" />
+            </span>
+          </h2>
+
+          <p class="faq-answer text-light-text-secondary dark:text-dark-text-secondary text-sm whitespace-pre-line">
+            {faq.answer}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll(".faq-item");
+
+    items.forEach((item) => {
+      const btn = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer") as HTMLElement | null;
+
+      btn?.addEventListener("click", () => {
+        const isOpen = item.classList.contains("active");
+
+        // Cerrar todos
+        items.forEach((i) => {
+          i.classList.remove("active");
+          const a = i.querySelector(".faq-answer") as HTMLElement | null;
+          if (a) {
+            a.style.height = "0";
+            a.classList.remove("open");
+          }
+        });
+
+        if (!isOpen && answer) {
+          item.classList.add("active");
+          answer.style.height = answer.scrollHeight + "px";
+          answer.classList.add("open");
+        }
+      });
+    });
+  });
+</script>

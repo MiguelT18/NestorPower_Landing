@@ -1,0 +1,66 @@
+---
+import { GlobalIcons } from "@assets/icons";
+---
+
+<section
+  class="dark:bg-dark-bg-secondary bg-light-bg-secondary mt-20 px-4 pt-12 pb-16"
+>
+  <div class="container mx-auto max-w-[1080px]">
+    <span id="cta-heart">
+      <GlobalIcons.Heart
+        customClass="dark:text-dark-primary text-light-primary size-16 lg:size-24 md:size-20 mx-auto mb-6 text-center text-light-primary dark:text-dark-primary"
+      />
+    </span>
+    <div class="space-y-4">
+      <h1
+        class="dark:text-dark-primary text-light-primary text-center text-2xl text-balance lg:text-3xl"
+      >
+        Esta es tu señal
+      </h1>
+      <p
+        class="text-light-text-secondary dark:text-dark-text-secondary text-md text-center text-balance"
+      >
+        Tu cuerpo refleja lo que sientes por dentro. No solo es tu cuerpo, es tu
+        confianza, tu energía, tu forma de ver la vida. Cada día que pasa sin
+        actuar es un día menos para ser la mejor versión de ti mismo. El momento
+        es ahora.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let heart = document.getElementById("cta-heart");
+    if (!heart) return;
+
+    let wasVisible = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (heart && entry.isIntersecting && !wasVisible) {
+            // Solo reemplaza si antes no era visible
+            const parent = heart.parentElement;
+            if (!parent) return;
+            const clone = heart.cloneNode(true) as HTMLElement;
+            clone.id = "cta-heart";
+            parent.replaceChild(clone, heart);
+            observer.unobserve(heart);
+            heart = clone;
+            observer.observe(heart);
+            wasVisible = true;
+          } else if (!entry.isIntersecting && wasVisible) {
+            // Marca como no visible cuando sale del viewport
+            wasVisible = false;
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    if (heart) {
+      observer.observe(heart);
+    }
+  });
+</script>
