@@ -3,10 +3,7 @@ import { GlobalIcons } from "@assets/icons";
 ---
 
 <button
-  data-tf-popup="roUllQU2"
-  data-tf-iframe-props="title=Mi formulario de registro"
-  data-tf-medium="snippet"
-  class="typeform-button primary-button group mx-auto flex cursor-pointer items-center justify-between gap-2 rounded-full bg-gradient-to-r from-[#de3f0d] to-[#ea0c0c] px-6 py-3 text-sm font-bold text-white uppercase shadow-[0_0_25px_rgba(234,12,12,0.6)] transition-transform duration-300 hover:scale-105 dark:from-[#dc2626] dark:to-[#ef4444]"
+  class="form-button group mx-auto flex cursor-pointer items-center justify-between gap-2 rounded-full bg-gradient-to-r from-[#de3f0d] to-[#ea0c0c] px-6 py-3 text-sm font-bold text-white uppercase shadow-[0_0_25px_rgba(234,12,12,0.6)] transition-transform duration-300 hover:scale-105 dark:from-[#dc2626] dark:to-[#ef4444]"
 >
   Quiero unirme
   <GlobalIcons.Arrow
@@ -15,59 +12,11 @@ import { GlobalIcons } from "@assets/icons";
 </button>
 
 <script>
-  // Add TypeScript declaration for window.typeformEmbed
-  // @ts-ignore
-  declare global {
-    interface Window {
-      typeformEmbed?: any;
-    }
-  }
+  const $formBtn = document.querySelectorAll(".form-button");
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const alreadySubmitted = localStorage.getItem("typeform_submitted");
-
-    const buttons = document.querySelectorAll(".typeform-button");
-
-    if (!buttons.length) return;
-
-    if (alreadySubmitted) {
-      // Si ya respondió, redirigir directamente desde cualquier botón
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          window.location.href =
-            "https://calendly.com/arcenestor068/nueva-reunion?from=typeform";
-        });
-      });
-      return;
-    }
-
-    const waitForTypeform = () => {
-      if (window.typeformEmbed) {
-        const popup = window.typeformEmbed.makePopup(
-          "https://form.typeform.com/to/roUllQU2",
-          {
-            mode: "popup",
-            autoClose: 0,
-            hideHeaders: true,
-            hideFooters: true,
-            onSubmit: () => {
-              localStorage.setItem("typeform_submitted", "true");
-              window.open(
-                "https://calendly.com/arcenestor068/nueva-reunion?from=typeform",
-                "_blank",
-              );
-            },
-          },
-        );
-
-        buttons.forEach((btn) => {
-          btn.addEventListener("click", () => popup.open());
-        });
-      } else {
-        setTimeout(waitForTypeform, 100);
-      }
-    };
-
-    waitForTypeform();
+  $formBtn.forEach((btn) => {
+    btn?.addEventListener("click", () => {
+      window.location.href = "https://wa.link/k5nwsb";
+    });
   });
 </script>
