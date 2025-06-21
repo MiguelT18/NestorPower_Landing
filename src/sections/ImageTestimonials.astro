@@ -3,13 +3,57 @@ import { Image } from "astro:assets";
 import { loadTestimonialImages } from "@lib/loadImages.ts";
 
 const images = loadTestimonialImages();
+
+const testimonials = [
+  {
+    name: "Esteban",
+    result: "-10kg en 90 días",
+    description:
+      "Esteban bajó más de 10 kg en menos de 3 meses y sanó su relación con la comida. Dejó atrás la ansiedad, sin pasar hambre ni sentirse castigado. Hoy se lo nota por su seguridad, no solo por su físico.",
+  },
+  {
+    name: "Leandro",
+    result: "-7kg en 60 días",
+    description:
+      "Leandro entrenaba pero no veía resultados. Con nuestro sistema, bajó 7 kg en 2 meses y definió su cuerpo. Salió del estancamiento con claridad, seguimiento y un plan a su medida.",
+  },
+  {
+    name: "Darío",
+    result: "-40kg en 180 días",
+    description:
+      "Darío pesaba 120 kg y estaba destruido emocionalmente. En 6 meses bajó 40 kg y reconstruyó su autoestima. Hoy se muestra con orgullo: su transformación fue física, mental y emocional.",
+  },
+  {
+    name: "André",
+    result: "-10kg en 75 días",
+    description:
+      "André se esforzaba sin resultados. En 2 meses y medio bajó 10 kg al entender qué hacía mal. Ahora entrena menos y logra más. No le faltaba esfuerzo, le faltaba estrategia.",
+  },
+  {
+    name: "Alex",
+    result: "Recomposición corporal",
+    description:
+      "Alex no buscaba solo bajar de peso, quería verse fuerte. Perdió grasa, ganó músculo y hoy domina su cuerpo con confianza. Ya no depende de rutinas genéricas: tiene un plan con propósito.",
+  },
+  {
+    name: "Erlan",
+    result: "Transformación integral",
+    description:
+      "A sus 29 años, Erlan sentía que no tenía tiempo para cambiar. Pero al adaptar el sistema a su vida, bajó panza, recuperó energía y volvió a reconocerse en el espejo. No fue suerte, fue decisión.",
+  },
+];
+
+const testimonialsWithImages = testimonials.map((testimonial, i) => ({
+  ...testimonial,
+  images: images[i],
+}));
 ---
 
 <style>
   .testimonial-carousel .swiper-slide {
     display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
+    gap: 32px;
+    align-items: center;
   }
 
   .testimonial-carousel .swiper-button-prev,
@@ -38,9 +82,9 @@ const images = loadTestimonialImages();
     margin-top: 1rem;
   }
 
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
     .testimonial-carousel .swiper-slide {
-      flex-direction: row;
+      flex-direction: column;
     }
   }
 
@@ -68,32 +112,44 @@ const images = loadTestimonialImages();
     <div class="swiper">
       <div class="swiper-wrapper">
         {
-          images.map(({ antes, despues }) => (
-            <div class="swiper-slide">
-              <div class="swiper-zoom-container relative">
-                <span class="bg-light-primary/30 border-light-primary dark:bg-dark-primary/20 dark:border-dark-primary text-md text-light-primary absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full border px-6 py-2 font-bold">
-                  Antes
-                </span>
-                <Image
-                  src={antes}
-                  alt="Antes"
-                  class="size-full rounded-xl object-cover"
-                />
-                <div class="pointer-events-none absolute inset-0 z-10 rounded-xl bg-gradient-to-b from-transparent to-black opacity-60" />
+          testimonialsWithImages.map(
+            ({ name, description, images, result }, index) => (
+              <div class="swiper-slide">
+                <div class="size-full">
+                  <div class="grid w-full grid-cols-2 gap-8">
+                    <Image
+                      src={images.antes}
+                      alt="Antes"
+                      class="relative block size-full max-h-[500px] rounded-xl object-cover"
+                    />
+                    <Image
+                      src={images.despues}
+                      alt="Después"
+                      class="relative block size-full max-h-[500px] rounded-xl object-cover"
+                    />
+                  </div>
+
+                  <div class="mt-4 text-center [&>span]:block">
+                    <span class="text-light-text-primary dark:text-dark-text-primary text-md font-bold">
+                      {name}
+                    </span>
+                    <span class="text-light-primary dark:text-dark-primary text-sm">
+                      {result}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="bg-light-bg-surface dark:bg-dark-bg-surface size-full space-y-2 rounded-xl p-4">
+                  <h2 class="text-light-primary dark:text-dark-primary text-md font-bold">
+                    Caso {index + 1} - {name}
+                  </h2>
+                  <p class="text-light-text-secondary dark:text-dark-text-secondary text-sm">
+                    {description}
+                  </p>
+                </div>
               </div>
-              <div class="swiper-zoom-container relative">
-                <span class="bg-light-primary/30 border-light-primary dark:bg-dark-primary/20 dark:border-dark-primary text-md text-light-primary absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full border px-6 py-2 font-bold">
-                  Después
-                </span>
-                <Image
-                  src={despues}
-                  alt="Después"
-                  class="size-full rounded-xl object-cover"
-                />
-                <div class="pointer-events-none absolute inset-0 z-10 rounded-xl bg-gradient-to-b from-transparent to-black opacity-60" />
-              </div>
-            </div>
-          ))
+            ),
+          )
         }
       </div>
 
@@ -113,7 +169,7 @@ const images = loadTestimonialImages();
 
   document.addEventListener("DOMContentLoaded", () => {
     initSwiperCarousel(".testimonial-carousel", {
-      autoplay: { delay: 3000 },
+      // autoplay: { delay: 3000 },
       spaceBetween: 20,
       grabCursor: true,
       zoom: false,

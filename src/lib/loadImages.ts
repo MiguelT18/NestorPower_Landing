@@ -1,11 +1,15 @@
-import AntesImg1 from "@assets/images/antes_1.jpg";
-import DespuesImg1 from "@assets/images/despues_1.jpg";
-import AntesImg2 from "@assets/images/antes_2.jpg";
-import DespuesImg2 from "@assets/images/despues_2.jpg";
-import AntesImg3 from "@assets/images/antes_3.jpg";
-import DespuesImg3 from "@assets/images/despues_3.jpg";
-import AntesImg4 from "@assets/images/antes_4.jpg";
-import DespuesImg4 from "@assets/images/despues_4.jpg";
+import AntesImg1 from "@assets/images/andre-antes.jpg";
+import DespuesImg1 from "@assets/images/andre-despues.jpg";
+import AntesImg2 from "@assets/images/dario-antes.png";
+import DespuesImg2 from "@assets/images/dario-despues.png";
+import AntesImg3 from "@assets/images/erlan-antes.png";
+import DespuesImg3 from "@assets/images/erlan-despues.png";
+import AntesImg4 from "@assets/images/esteban-antes.png";
+import DespuesImg4 from "@assets/images/esteban-despues.png";
+import AntesImg5 from "@assets/images/leandro-antes.jpg";
+import DespuesImg5 from "@assets/images/leandro-despues.jpg";
+import AntesImg6 from "@assets/images/alex-antes.png";
+import DespuesImg6 from "@assets/images/alex-despues.png";
 
 interface TestimonialImage {
   antes: ImageMetadata;
@@ -30,5 +34,13 @@ export const loadTestimonialImages = (): TestimonialImage[] => {
       antes: AntesImg4,
       despues: DespuesImg4,
     },
+    {
+      antes: AntesImg5,
+      despues: DespuesImg5
+    },
+    {
+      antes: AntesImg6,
+      despues: DespuesImg6
+    }
   ];
 };
