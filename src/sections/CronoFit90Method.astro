@@ -1,31 +1,35 @@
 ---
-import { GlobalIcons } from "@assets/icons";
+import { Image } from "astro:assets";
 import PrimaryButton from "@components/PrimaryButton.astro";
+import PlanImg from "@assets/images/calendar.jpg";
+import DietaImg from "@assets/images/dieta.jpg";
+import ExpressImg from "@assets/images/guia.jpg";
+import TargetImg from "@assets/images/plan.jpg";
 
 const cronofitMethod = [
   {
     title: "Plan Diario",
     description:
       "Organizamos tus entrenos, comidas y descanso según tu día a día. Sin caos, sin excusas, solo acción.",
-    icon: GlobalIcons.Clock,
+    image: PlanImg,
   },
   {
     title: "Dieta Flex",
     description:
       "Come bien sin restricciones. Con el Semáforo de Platos, eliges fácil en cualquier lugar, sin culpa ni ansiedad.",
-    icon: GlobalIcons.Cutlery,
+    image: DietaImg,
   },
   {
     title: "Entreo Express",
     description:
       "3 sesiones por semana, 45 minutos. Fuerza y cardio para quemar grasa rápido. Incluso desde un hotel.",
-    icon: GlobalIcons.Dumbbell,
+    image: ExpressImg,
   },
   {
     title: "Seguimiento Total",
     description:
       "Cada 15 días ajustamos tu plan para que avances sin freno. Siempre en movimiento, siempre mejorando.",
-    icon: GlobalIcons.Target,
+    image: TargetImg,
   },
 ];
 ---
@@ -35,7 +39,10 @@ const cronofitMethod = [
     <h1
       class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mb-4 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
     >
-      Método <span>CronoFit90</span>
+      Método <span
+        class="after:bg-light-primary dark:after:bg-dark-primary relative after:absolute after:right-0 after:bottom-0 after:block after:h-1 after:w-full after:rounded-full"
+        >CronoFit90</span
+      >
     </h1>
 
     <p
@@ -54,16 +61,23 @@ const cronofitMethod = [
     </p>
   </header>
 
-  <ul class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2">
+  <ul class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
     {
-      cronofitMethod.map((item) => (
-        <li class="bg-light-bg-surface dark:bg-dark-bg-surface shadow-light dark:shadow-dark rounded-xl p-5 shadow-lg">
-          <item.icon customClass="size-14 mb-6 text-light-primary dark:text-dark-primary" />
-
-          <h2 class="text-md font-semibold dark:text-white">{item.title}</h2>
-          <p class="text-light-text-secondary dark:text-dark-text-secondary text-sm">
+      cronofitMethod.map((item, index) => (
+        <li class="bg-light-bg-surface dark:bg-dark-bg-surface shadow-light dark:shadow-dark relative rounded-xl p-5 shadow-lg">
+          <Image
+            class="mx-auto mb-4 aspect-square size-24 rounded-full"
+            src={item.image}
+            alt="Imagen que describe el bono del Método CronoFit90"
+          />
+          <h2 class="text-md text-center font-semibold dark:text-white">
+            {item.title}
+          </h2>
+          <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4 text-center text-sm">
             {item.description}
           </p>
+
+          <span class="bg-light-primary dark:bg-dark-primary absolute right-1/2 bottom-4 block h-2 w-16 translate-x-1/2 rounded-full" />
         </li>
       ))
     }

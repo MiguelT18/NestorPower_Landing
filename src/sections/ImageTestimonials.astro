@@ -6,6 +6,24 @@ const images = loadTestimonialImages();
 
 const testimonials = [
   {
+    name: "André",
+    result: "-10kg en 75 días",
+    description:
+      "André se esforzaba sin resultados. En 2 meses y medio bajó 10 kg al entender qué hacía mal. Ahora entrena menos y logra más. No le faltaba esfuerzo, le faltaba estrategia.",
+  },
+  {
+    name: "Darío",
+    result: "-40kg en 180 días",
+    description:
+      "Darío pesaba 120 kg y estaba destruido emocionalmente. En 6 meses bajó 40 kg y reconstruyó su autoestima. Hoy se muestra con orgullo: su transformación fue física, mental y emocional.",
+  },
+  {
+    name: "Erlan",
+    result: "Transformación integral",
+    description:
+      "A sus 29 años, Erlan sentía que no tenía tiempo para cambiar. Pero al adaptar el sistema a su vida, bajó panza, recuperó energía y volvió a reconocerse en el espejo. No fue suerte, fue decisión.",
+  },
+  {
     name: "Esteban",
     result: "-10kg en 90 días",
     description:
@@ -18,28 +36,10 @@ const testimonials = [
       "Leandro entrenaba pero no veía resultados. Con nuestro sistema, bajó 7 kg en 2 meses y definió su cuerpo. Salió del estancamiento con claridad, seguimiento y un plan a su medida.",
   },
   {
-    name: "Darío",
-    result: "-40kg en 180 días",
-    description:
-      "Darío pesaba 120 kg y estaba destruido emocionalmente. En 6 meses bajó 40 kg y reconstruyó su autoestima. Hoy se muestra con orgullo: su transformación fue física, mental y emocional.",
-  },
-  {
-    name: "André",
-    result: "-10kg en 75 días",
-    description:
-      "André se esforzaba sin resultados. En 2 meses y medio bajó 10 kg al entender qué hacía mal. Ahora entrena menos y logra más. No le faltaba esfuerzo, le faltaba estrategia.",
-  },
-  {
     name: "Alex",
     result: "Recomposición corporal",
     description:
       "Alex no buscaba solo bajar de peso, quería verse fuerte. Perdió grasa, ganó músculo y hoy domina su cuerpo con confianza. Ya no depende de rutinas genéricas: tiene un plan con propósito.",
-  },
-  {
-    name: "Erlan",
-    result: "Transformación integral",
-    description:
-      "A sus 29 años, Erlan sentía que no tenía tiempo para cambiar. Pero al adaptar el sistema a su vida, bajó panza, recuperó energía y volvió a reconocerse en el espejo. No fue suerte, fue decisión.",
   },
 ];
 
@@ -169,7 +169,7 @@ const testimonialsWithImages = testimonials.map((testimonial, i) => ({
 
   document.addEventListener("DOMContentLoaded", () => {
     initSwiperCarousel(".testimonial-carousel", {
-      // autoplay: { delay: 3000 },
+      autoplay: { delay: 3000 },
       spaceBetween: 20,
       grabCursor: true,
       zoom: false,
