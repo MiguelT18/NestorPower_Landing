@@ -121,7 +121,7 @@ const steps: Step[] = [
 export default function Form() {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [direction, setDirection] = useState<1 | -1>(1);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState(() =>
     steps.reduce(
       (acc, step) => {
@@ -192,21 +192,33 @@ export default function Form() {
       setDirection(1);
       setCurrentStep(nextIndex);
     } else {
-      console.log("Formulario completado", formData);
-      // TODO: Agregar contacto a la lista de Brevo
-      // TODO: Crear un documento PDF con las respuestas del usuario
-      const res = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      setLoading(true);
 
-      const data = await res.json();
+      try {
+        const res = await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
 
-      if (res.ok) {
-        console.log("Formulario enviado por correo correctamente.");
-      } else {
-        console.error("Error al enviar:", data.message);
+        const text = await res.text();
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = { message: "Respuesta vacía o malformada del servidor" };
+        }
+
+        if (res.ok) {
+          console.log("Formulario enviado correctamente.");
+        } else {
+          console.error("Error al enviar:", data.message);
+        }
+      } catch (err) {
+        console.error("Fallo de red o servidor:", err);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -293,9 +305,14 @@ export default function Form() {
         <button
           onClick={nextStep}
           type="submit"
-          className="bg-light-primary dark:bg-dark-primary border-light-primary dark:border-dark-primary hover:bg-light-primary/70 hover:dark:bg-dark-primary/70 w-full cursor-pointer rounded-lg py-2 text-sm text-white transition-colors outline-none"
+          className="bg-light-primary dark:bg-dark-primary border-light-primary dark:border-dark-primary hover:bg-light-primary/70 hover:dark:bg-dark-primary/70 disabled:bg-light-primary/60 disabled:dark:bg-dark-primary/60 w-full cursor-pointer rounded-lg py-2 text-sm text-white transition-colors outline-none disabled:cursor-not-allowed"
+          disabled={loading}
         >
-          {currentStep === steps.length - 1 ? "Enviar" : "Siguiente"}
+          {currentStep === steps.length - 1
+            ? loading
+              ? "Enviando..."
+              : "Enviar"
+            : "Siguiente"}
         </button>
       </div>
     </form>
