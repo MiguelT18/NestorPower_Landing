@@ -1,5 +1,7 @@
 ---
 import { GlobalIcons } from "@assets/icons";
+import { AnimatePresence, motion } from "framer-motion";
+import Form from "./Form.tsx";
 ---
 
 <button
@@ -11,12 +13,43 @@ import { GlobalIcons } from "@assets/icons";
   />
 </button>
 
-<script>
-  const $formBtn = document.querySelectorAll(".form-button");
+<dialog
+  id="main-dialog"
+  closedby="any"
+  class="dark:bg-dark-bg-secondary m-auto w-full rounded-xl bg-white p-4 outline-none backdrop:backdrop-blur-sm md:max-w-[700px]"
+>
+  <div class="modal-content">
+    <h1
+      class="text-light-text-primary dark:text-dark-text-primary [&>span]:text-light-primary [&>span]:dark:text-dark-primary text-center text-2xl"
+    >
+      Primero tengo que saber <span>algunas cosas sobre ti</span>
+    </h1>
+    <Form client:only="React" />
+  </div>
+</dialog>
 
-  $formBtn.forEach((btn) => {
-    btn?.addEventListener("click", () => {
-      window.location.href = "https://wa.link/4up9ye";
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const $btns = document.querySelectorAll(".form-button");
+    const $dialog = document.querySelector(
+      "#main-dialog",
+    ) as HTMLDialogElement | null;
+
+    if (!$btns.length || !$dialog) return;
+
+    $dialog.showModal();
+
+    // ✅ Abrir el modal
+    $btns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        $dialog.classList.remove("modal-closing");
+        $dialog.showModal();
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    $dialog.addEventListener("close", () => {
+      document.body.style.overflow = "auto";
     });
   });
 </script>
