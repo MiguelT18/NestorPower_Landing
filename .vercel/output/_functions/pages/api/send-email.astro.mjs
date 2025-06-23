@@ -1,28 +1,59 @@
-import path from 'path';
-import fs from 'fs/promises';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import nodemailer from 'nodemailer';
-import { chromium } from 'playwright';
 export { renderers } from '../../renderers.mjs';
 
+const SMTP_PASSWORD = "oyol jdig bcvi wuji";
 const POST = async ({ request }) => {
   try {
+    if (!SMTP_PASSWORD) ;
     const formData = await request.json();
-    const templatePath = path.resolve("./src/lib/form.html");
-    const template = await fs.readFile(templatePath, "utf8");
-    const htmlForm = Object.entries(formData).map(([k, v]) => `<div class="question">${k}</div><div class="answer">${v}</div>`).join("");
-    const finalHtml = template.replace("{{formulario}}", htmlForm);
-    const browser = await chromium.launch();
-    const page = await browser.newPage();
-    await page.setContent(finalHtml, { waitUntil: "load" });
-    const pdfBuffer = await page.pdf({ format: "A4" });
-    await browser.close();
+    const pdfDoc = await PDFDocument.create();
+    let page = pdfDoc.addPage([595, 842]);
+    const { width, height } = page.getSize();
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const margin = 50;
+    let yPosition = height - margin;
+    const title = "Resumen del formulario";
+    page.drawText(title, {
+      x: margin,
+      y: yPosition,
+      size: 20,
+      font: fontBold,
+      color: rgb(0, 0.53, 0.71)
+    });
+    yPosition -= 40;
+    for (const [question, answer] of Object.entries(formData)) {
+      page.drawText(`${question}:`, {
+        x: margin,
+        y: yPosition,
+        size: 14,
+        font: fontBold,
+        color: rgb(0.2, 0.2, 0.2)
+      });
+      yPosition -= 18;
+      const text = typeof answer === "string" ? answer : JSON.stringify(answer);
+      page.drawText(text, {
+        x: margin + 10,
+        y: yPosition,
+        size: 12,
+        font,
+        color: rgb(0, 0, 0)
+      });
+      yPosition -= 30;
+      if (yPosition < margin + 30) {
+        yPosition = height - margin;
+        page = pdfDoc.addPage([595, 842]);
+      }
+    }
+    const pdfBytes = await pdfDoc.save();
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
       secure: true,
       auth: {
         user: "miguel.teranj02@gmail.com",
-        pass: "oyol jdig bcvi wuji"
+        pass: SMTP_PASSWORD
       }
     });
     await transporter.sendMail({
@@ -33,19 +64,22 @@ const POST = async ({ request }) => {
       attachments: [
         {
           filename: "resumen-formulario.pdf",
-          content: pdfBuffer,
+          content: Buffer.from(pdfBytes),
           contentType: "application/pdf"
         }
       ]
     });
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(
+      JSON.stringify({ success: true }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
     console.error("Error al generar o enviar el PDF:", error);
     return new Response(
-      JSON.stringify({ success: false, message: "Error al enviar el formulario." }),
+      JSON.stringify({
+        success: false,
+        message: error.message || "Error al enviar el formulario."
+      }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
