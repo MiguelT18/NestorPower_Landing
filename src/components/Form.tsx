@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import RenderInput from "./RenderInput";
 import type { Step } from "./RenderInput";
+import Typewriter from "typewriter-effect";
+import { useIsInViewport } from "@hooks/useIsInViewport";
 
 const variants = {
   enter: (direction: number) => ({
@@ -131,6 +133,9 @@ export default function Form() {
     ),
   );
 
+  const { ref: questionRef, isIntersecting } =
+    useIsInViewport<HTMLSpanElement>();
+
   const progress = Math.round((currentStep / (steps.length - 1)) * 100);
 
   const handleCloseForm = () => {
@@ -164,13 +169,27 @@ export default function Form() {
     const nextIndex = currentStep + 1;
 
     // Saltar la pregunta de detalle si dijo "no" antes
-    if (
-      current.name === "experiencia_prev_entrenador" &&
-      formData["experiencia_prev_entrenador"] === "no"
-    ) {
-      setDirection(1);
-      setCurrentStep(currentStep + 2); // saltamos el índice 9
-      return;
+    if (current.name === "experiencia_prev_entrenador") {
+      const inputEl = document.querySelector<HTMLSelectElement>(
+        `select[name="experiencia_prev_entrenador"]`,
+      );
+
+      if (inputEl?.value === "no") {
+        setFormData((prev) => ({
+          ...prev,
+          experiencia_prev_entrenador: "no",
+          detalle_experiencia_entrenador: "",
+        }));
+        setDirection(1);
+        setCurrentStep(currentStep + 2);
+        return;
+      } else {
+        // 👇️ importante para guardar "si" explícitamente antes de pasar de paso
+        setFormData((prev) => ({
+          ...prev,
+          experiencia_prev_entrenador: "si",
+        }));
+      }
     }
 
     if (currentStep < steps.length - 1) {
@@ -202,10 +221,17 @@ export default function Form() {
     >,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    setFormData((prev) => {
+      const newFormData = { ...prev, [name]: value };
+
+      // Si el campo es experiencia_prev_entrenador y es "no", limpiar detalle_experiencia_entrenador
+      if (name === "experiencia_prev_entrenador" && value === "no") {
+        newFormData["detalle_experiencia_entrenador"] = "";
+      }
+
+      return newFormData;
+    });
   };
 
   return (
@@ -232,8 +258,22 @@ export default function Form() {
             exit="exit"
             transition={{ duration: 0.3 }}
           >
-            <span className="text-light-text-primary dark:text-dark-text-primary text-md block font-bold">
-              {steps[currentStep].question}
+            <span
+              ref={questionRef}
+              className="text-light-text-primary dark:text-dark-text-primary text-md block font-bold"
+            >
+              {isIntersecting && (
+                <Typewriter
+                  key={currentStep}
+                  onInit={(typewriter) => {
+                    typewriter.typeString(steps[currentStep].question).start();
+                  }}
+                  options={{
+                    cursor: "|",
+                    delay: 40,
+                  }}
+                />
+              )}
             </span>
             {steps[currentStep].description && (
               <p className="text-light-text-secondary dark:text-dark-text-secondary mt-2 block text-sm">

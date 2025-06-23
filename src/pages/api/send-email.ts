@@ -1,68 +1,75 @@
 import type { APIRoute } from "astro";
-import path from "path";
-import fs from "fs/promises";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import nodemailer from "nodemailer";
 
-const API2PDF_KEY = import.meta.env.API2PDF_KEY;
 const SMTP_PASSWORD = import.meta.env.SMTP_GMAIL_PASSWORD;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Validar variables de entorno
-    if (!API2PDF_KEY) throw new Error("API2PDF_KEY no está definida");
     if (!SMTP_PASSWORD) throw new Error("SMTP_GMAIL_PASSWORD no está definido");
 
     const formData = await request.json();
 
-    // Confirmar ruta absoluta y existencia del template
-    const templatePath = path.resolve("./src/lib/form.html");
-    const template = await fs.readFile(templatePath, "utf8");
+    // Crear documento PDF
+    const pdfDoc = await PDFDocument.create();
 
-    const htmlForm = Object.entries(formData)
-      .map(([k, v]) => `<div class="question">${k}</div><div class="answer">${v}</div>`)
-      .join("");
-    const finalHtml = template.replace("{{formulario}}", htmlForm);
+    // Añadir página
+    let page = pdfDoc.addPage([595, 842]); // A4 en puntos (72 dpi)
+    const { width, height } = page.getSize();
 
-    if (!finalHtml.includes("<html") || !finalHtml.includes("</html>")) {
-      throw new Error("HTML generado inválido");
-    }
+    // Fuentes
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-    // Usar fetch global si está disponible
-    const fetchFn = globalThis.fetch || (await import("node-fetch")).default;
+    const margin = 50;
+    let yPosition = height - margin;
 
-    const apiRes = await fetchFn("https://v2.api2pdf.com/chrome/html", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: API2PDF_KEY,
-      },
-      body: JSON.stringify({
-        html: finalHtml,
-        inlinePdf: true,
-        fileName: "resumen-formulario.pdf",
-      }),
+    // Título
+    const title = "Resumen del formulario";
+    page.drawText(title, {
+      x: margin,
+      y: yPosition,
+      size: 20,
+      font: fontBold,
+      color: rgb(0, 0.53, 0.71),
     });
 
-    if (!apiRes.ok) {
-      const errText = await apiRes.text();
-      throw new Error(`Error API2PDF: ${apiRes.status} - ${errText}`);
+    yPosition -= 40;
+
+    // Mostrar cada pregunta y respuesta
+    for (const [question, answer] of Object.entries(formData)) {
+      // Pregunta en negrita
+      page.drawText(`${question}:`, {
+        x: margin,
+        y: yPosition,
+        size: 14,
+        font: fontBold,
+        color: rgb(0.2, 0.2, 0.2),
+      });
+      yPosition -= 18;
+
+      // Respuesta en normal
+      const text = typeof answer === "string" ? answer : JSON.stringify(answer);
+      // Para saltos de línea simples (puedes mejorar con text wrapping)
+      page.drawText(text, {
+        x: margin + 10,
+        y: yPosition,
+        size: 12,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      yPosition -= 30;
+
+      // Salto de página si se acaba el espacio
+      if (yPosition < margin + 30) {
+        yPosition = height - margin;
+        page = pdfDoc.addPage([595, 842]);
+      }
     }
 
-    const apiJson = await apiRes.json() as { success: boolean; pdf?: string; };
-
-    if (!apiJson.success || !apiJson.pdf) {
-      throw new Error("Error en la generación del PDF con Api2Pdf");
-    }
-
-    let pdfBuffer: Buffer;
-    if (apiJson.pdf.startsWith("http")) {
-      const pdfRes = await fetchFn(apiJson.pdf);
-      if (!pdfRes.ok) throw new Error("Error al descargar el PDF desde URL");
-      const arrayBuffer = await pdfRes.arrayBuffer();
-      pdfBuffer = Buffer.from(arrayBuffer);
-    } else {
-      pdfBuffer = Buffer.from(apiJson.pdf, "base64");
-    }
+    // Serializar PDF a bytes
+    const pdfBytes = await pdfDoc.save();
 
     // Configuración SMTP
     const transporter = nodemailer.createTransport({
@@ -83,16 +90,16 @@ export const POST: APIRoute = async ({ request }) => {
       attachments: [
         {
           filename: "resumen-formulario.pdf",
-          content: pdfBuffer,
+          content: Buffer.from(pdfBytes),
           contentType: "application/pdf",
         },
       ],
     });
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ success: true }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error: any) {
     console.error("Error al generar o enviar el PDF:", error);
     return new Response(
