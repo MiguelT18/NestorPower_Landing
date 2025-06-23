@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import RenderInput from "./RenderInput";
 import type { Step } from "./RenderInput";
 import Typewriter from "typewriter-effect";
-import { useIsInViewport } from "@hooks/useIsInViewport";
 
 const variants = {
   enter: (direction: number) => ({
@@ -133,9 +132,6 @@ export default function Form() {
     ),
   );
 
-  const { ref: questionRef, isIntersecting } =
-    useIsInViewport<HTMLSpanElement>();
-
   const progress = Math.round((currentStep / (steps.length - 1)) * 100);
 
   const handleCloseForm = () => {
@@ -258,23 +254,19 @@ export default function Form() {
             exit="exit"
             transition={{ duration: 0.3 }}
           >
-            <span
-              ref={questionRef}
-              className="text-light-text-primary dark:text-dark-text-primary text-md block font-bold"
-            >
-              {isIntersecting && (
-                <Typewriter
-                  key={currentStep}
-                  onInit={(typewriter) => {
-                    typewriter.typeString(steps[currentStep].question).start();
-                  }}
-                  options={{
-                    cursor: "|",
-                    delay: 40,
-                  }}
-                />
-              )}
+            <span className="text-light-text-primary dark:text-dark-text-primary text-md block font-bold">
+              <Typewriter
+                key={currentStep}
+                onInit={(typewriter) => {
+                  typewriter.typeString(steps[currentStep].question).start();
+                }}
+                options={{
+                  cursor: "|",
+                  delay: 40,
+                }}
+              />
             </span>
+
             {steps[currentStep].description && (
               <p className="text-light-text-secondary dark:text-dark-text-secondary mt-2 block text-sm">
                 {steps[currentStep].description}
