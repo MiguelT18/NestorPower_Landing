@@ -164,7 +164,7 @@ export default function Form() {
     const current = steps[currentStep];
     const nextIndex = currentStep + 1;
 
-    // Saltar la pregunta de detalle si dijo "no" antes
+    // Salto condicional si respondió "no" a entrenador
     if (current.name === "experiencia_prev_entrenador") {
       const inputEl = document.querySelector<HTMLSelectElement>(
         `select[name="experiencia_prev_entrenador"]`,
@@ -180,7 +180,6 @@ export default function Form() {
         setCurrentStep(currentStep + 2);
         return;
       } else {
-        // 👇️ importante para guardar "si" explícitamente antes de pasar de paso
         setFormData((prev) => ({
           ...prev,
           experiencia_prev_entrenador: "si",
@@ -195,25 +194,42 @@ export default function Form() {
       setLoading(true);
 
       try {
-        const res = await fetch("/api/send-email", {
+        // 1. Enviar el email (PDF con respuestas)
+        const emailRes = await fetch("/api/send-email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
 
-        const text = await res.text();
-        let data;
+        // 2. Agregar usuario a Brevo (usando nombre y email)
+        const brevoRes = await fetch("/api/brevo/add-contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: formData.email,
+            nombre: formData.nombre,
+            telefono: formData.telefono,
+          }),
+        });
 
-        try {
-          data = JSON.parse(text);
-        } catch {
-          data = { message: "Respuesta vacía o malformada del servidor" };
-        }
+        // Parsear y verificar ambas respuestas
+        const [emailText, brevoText] = await Promise.all([
+          emailRes.text(),
+          brevoRes.text(),
+        ]);
 
-        if (res.ok) {
-          console.log("Formulario enviado correctamente.");
+        const emailData = safeJsonParse(emailText);
+        const brevoData = safeJsonParse(brevoText);
+
+        if (emailRes.ok && brevoRes.ok) {
+          console.log("Formulario enviado y contacto agregado a Brevo");
+          window.location.href =
+            "https://calendly.com/nestorarce068/nueva-reunion?back=1&month=2025-06";
         } else {
-          console.error("Error al enviar:", data.message);
+          console.error("Error:", {
+            email: emailData?.message || emailText,
+            brevo: brevoData?.message || brevoText,
+          });
         }
       } catch (err) {
         console.error("Fallo de red o servidor:", err);
@@ -222,6 +238,14 @@ export default function Form() {
       }
     }
   };
+
+  function safeJsonParse(str: string) {
+    try {
+      return JSON.parse(str);
+    } catch {
+      return null;
+    }
+  }
 
   const handleChange = (
     e: React.ChangeEvent<
