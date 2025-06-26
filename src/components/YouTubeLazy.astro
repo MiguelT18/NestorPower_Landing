@@ -56,6 +56,8 @@ const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
     src={thumbnail}
     alt={`Thumbnail de ${title}`}
     class="yt-thumbnail"
+    fetchpriority="low"
+    style="content-visibility:auto"
   />
   <div class="yt-overlay">
     <button class="yt-play-button cursor-pointer" aria-label="Reproducir video"
