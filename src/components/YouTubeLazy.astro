@@ -1,6 +1,4 @@
 ---
-import { Image } from "astro:assets";
-
 // YouTubeLazy.astro
 const { videoId, title } = Astro.props;
 const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
@@ -49,14 +47,14 @@ const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
 <div class="yt-wrapper" data-video-id={videoId} data-title={title}>
   <img
-    loading="lazy"
+    loading={Astro.props.priority ? "eager" : "lazy"}
+    fetchpriority={Astro.props.priority ? "high" : "low"}
     decoding="async"
     width="300"
     height="300"
     src={thumbnail}
     alt={`Thumbnail de ${title}`}
     class="yt-thumbnail"
-    fetchpriority="low"
     style="content-visibility:auto"
   />
   <div class="yt-overlay">
