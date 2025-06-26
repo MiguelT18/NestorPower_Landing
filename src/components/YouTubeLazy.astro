@@ -48,10 +48,11 @@ const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 </style>
 
 <div class="yt-wrapper" data-video-id={videoId} data-title={title}>
-  <Image
+  <img
     loading="lazy"
-    width={900}
-    height={900}
+    decoding="async"
+    width="300"
+    height="300"
     src={thumbnail}
     alt={`Thumbnail de ${title}`}
     class="yt-thumbnail"
