@@ -2,9 +2,9 @@ const $themeButton = document.getElementById("theme-button");
 const $sun = document.getElementById("sun-icon");
 const $moon = document.getElementById("moon-icon");
 
-const root: HTMLElement = document.documentElement;
+const root = document.documentElement;
 
-function resetSVGAnimation($el: HTMLElement | null) {
+function resetSVGAnimation($el) {
   if (!$el) return;
   const html = $el.innerHTML;
   $el.innerHTML = "";
@@ -15,7 +15,7 @@ function resetSVGAnimation($el: HTMLElement | null) {
 
 if ($themeButton instanceof HTMLButtonElement) {
   $themeButton?.addEventListener("click", () => {
-    const isNowDark: boolean = root.classList.toggle("dark");
+    const isNowDark = root.classList.toggle("dark");
     localStorage.theme = isNowDark ? "dark" : "light";
 
     // Reiniciar animación de los SVGs
