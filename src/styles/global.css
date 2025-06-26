@@ -113,38 +113,4 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.react-tel-input .country.highlight,
-.react-tel-input .selected-flag,
-.react-tel-input .country[aria-selected="true"] {
-  background-color: theme("colors.light.bg.secondary") !important;
-  color: theme("colors.light.text.primary") !important;
-}
-
-.dark .react-tel-input .country.highlight,
-.dark .react-tel-input .selected-flag,
-.dark .react-tel-input .country[aria-selected="true"] {
-  background-color: theme("colors.dark.bg.secondary") !important;
-  color: theme("colors.dark.text-primary") !important;
-}
-
-.react-tel-input .selected-flag {
-  border: 1px solid var(--color-light-primary);
-}
-
-.dark .react-tel-input .selected-flag {
-  border: 1px solid var(--color-dark-primary);
-}
-
-.react-tel-input .form-control {
-  height: 52px !important;
-}
-
-.react-tel-input .country:hover {
-  background-color: theme("colors.light.bg.secondary") !important;
-  color: theme("colors.light.text.primary") !important;
-}
-
-.dark .react-tel-input .country:hover {
-  background-color: theme("colors.dark.bg.secondary") !important;
-  color: theme("colors.dark.text.primary") !important;
-}
+/* Eliminar reglas de react-tel-input si no se usa en el proyecto */

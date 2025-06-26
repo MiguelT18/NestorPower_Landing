@@ -121,6 +121,7 @@ const testimonialsWithImages = testimonials.map((testimonial, i) => ({
                 <div class="size-full">
                   <div class="grid w-full grid-cols-2 gap-8">
                     <Image
+                      loading="lazy"
                       width={300}
                       height={300}
                       src={images.antes}
@@ -128,6 +129,7 @@ const testimonialsWithImages = testimonials.map((testimonial, i) => ({
                       class="relative block size-full max-h-[500px] rounded-xl object-cover"
                     />
                     <Image
+                      loading="lazy"
                       width={300}
                       height={300}
                       src={images.despues}
