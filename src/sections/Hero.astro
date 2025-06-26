@@ -1,5 +1,6 @@
 ---
 import PrimaryButton from "@components/PrimaryButton.astro";
+import YouTubeLazy from "@components/YouTubeLazy.astro";
 ---
 
 <style>
@@ -10,10 +11,14 @@ import PrimaryButton from "@components/PrimaryButton.astro";
 
 <section class="container mx-auto px-4">
   <h1
-    class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mx-auto max-w-[1080px] text-center text-3xl text-balance text-black md:text-4xl lg:text-5xl dark:text-white"
+    class="mx-auto max-w-[1080px] text-center text-3xl text-balance text-black md:text-4xl lg:text-5xl dark:text-white"
+    aria-label="Cómo perder hasta 12 kilos de grasa, eliminar tu panza y ganar músculo en 90 días"
   >
-    Cómo perder hasta <span>12 kilos de grasa</span>, eliminar tu panza y ganar
-    músculo en <span>90 días</span>
+    Cómo perder hasta <span class="text-light-primary dark:text-dark-primary"
+      >12 kilos de grasa</span
+    >, eliminar tu panza y ganar músculo en <span
+      class="text-light-primary dark:text-dark-primary">90 días</span
+    >
   </h1>
 
   <p
@@ -25,13 +30,7 @@ import PrimaryButton from "@components/PrimaryButton.astro";
   <div
     class="shadow-frame relative mx-auto mb-14 max-w-[1080px] overflow-hidden rounded-2xl shadow-lg dark:shadow-[0_12px_24px_rgba(255,255,255,0.05)]"
   >
-    <iframe
-      class="aspect-video w-full rounded-lg"
-      src="https://www.youtube.com/embed/AfkT1K7ICRU?modestbranding=1&autoplay=1&mute=0"
-      title="MÉTODO CRONOFIT90"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen></iframe>
+    <YouTubeLazy videoId="AfkT1K7ICRU" title="MÉTODO CRONOFIT90" />
   </div>
 
   <PrimaryButton />

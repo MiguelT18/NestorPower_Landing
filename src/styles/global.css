@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Gerad";
-  src: url("/fonts/Gerad-Regular.ttf");
-}
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -52,9 +47,7 @@
   --loader-fg: #ffffff99;
 
   --swiper-theme-color: var(--color-light-primary) !important;
-  --swiper-pagination-bullet-inactive-color: var(
-    --color-light-primary
-  ) !important;
+  --swiper-pagination-bullet-inactive-color: var(--color-light-primary) !important;
 
   --vsl-shadow-frame: rgba(234, 12, 12, 0.813);
 
@@ -68,9 +61,7 @@
   --loader-fg: #ffffff1a;
 
   --swiper-theme-color: var(--color-dark-primary) !important;
-  --swiper-pagination-bullet-inactive-color: var(
-    --color-dark-primary
-  ) !important;
+  --swiper-pagination-bullet-inactive-color: var(--color-dark-primary) !important;
 
   --vsl-shadow-frame: rgba(234, 12, 12, 0.537);
 

@@ -103,9 +103,12 @@ const testimonialsWithImages = testimonials.map((testimonial, i) => ({
 
 <section class="mx-auto my-16 max-w-[1080px] px-4">
   <h1
-    class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mb-6 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+    class="mb-6 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+    aria-label="Testimonios en imágenes de cambios físicos reales"
   >
-    los cambios <span>hablan por si solos</span>
+    los cambios <span class="text-light-primary dark:text-dark-primary"
+      >hablan por si solos</span
+    >
   </h1>
 
   <main class="testimonial-carousel container mx-auto">
@@ -118,11 +121,15 @@ const testimonialsWithImages = testimonials.map((testimonial, i) => ({
                 <div class="size-full">
                   <div class="grid w-full grid-cols-2 gap-8">
                     <Image
+                      width={300}
+                      height={300}
                       src={images.antes}
                       alt="Antes"
                       class="relative block size-full max-h-[500px] rounded-xl object-cover"
                     />
                     <Image
+                      width={300}
+                      height={300}
                       src={images.despues}
                       alt="Después"
                       class="relative block size-full max-h-[500px] rounded-xl object-cover"

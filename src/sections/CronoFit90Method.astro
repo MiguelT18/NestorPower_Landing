@@ -37,10 +37,11 @@ const cronofitMethod = [
 <section class="container mx-auto my-16 max-w-[1080px] px-4">
   <header>
     <h1
-      class="[&>span]:dark:text-dark-primary [&>span]:text-light-primary mb-4 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+      class="mb-4 text-center text-2xl text-balance text-black lg:text-3xl dark:text-white"
+      aria-label="Método CronoFit90: sistema completo para perder grasa y ganar músculo"
     >
       Método <span
-        class="after:bg-light-primary dark:after:bg-dark-primary relative after:absolute after:right-0 after:bottom-0 after:block after:h-1 after:w-full after:rounded-full"
+        class="text-light-primary dark:text-dark-primary after:bg-light-primary dark:after:bg-dark-primary relative after:absolute after:right-0 after:bottom-0 after:block after:h-1 after:w-full after:rounded-full"
         >CronoFit90</span
       >
     </h1>
@@ -66,6 +67,8 @@ const cronofitMethod = [
       cronofitMethod.map((item, index) => (
         <li class="bg-light-bg-surface dark:bg-dark-bg-surface shadow-light dark:shadow-dark relative rounded-xl p-5 shadow-lg">
           <Image
+            width={200}
+            height={200}
             class="mx-auto mb-4 aspect-square size-24 rounded-full"
             src={item.image}
             alt="Imagen que describe el bono del Método CronoFit90"
